@@ -6,7 +6,9 @@
 // The copy is byte-exact: the summary is written once and never rewritten,
 // so the two grader runs always agree.
 
-import { copyFileSync } from 'node:fs';
+import { copyFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 
-copyFileSync(new URL('./summary.txt', import.meta.url), join(process.env.MAKEFUN_OUTPUT_DIR ?? '/output', 'entry.txt'));
+const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+mkdirSync(outDir, { recursive: true });
+copyFileSync(new URL('./summary.txt', import.meta.url), join(outDir, 'entry.txt'));
